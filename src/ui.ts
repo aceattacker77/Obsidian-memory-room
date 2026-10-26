@@ -251,6 +251,9 @@ export class RoomUI {
         else this.showMemory(memory.path);
       } else if (spot) {
         this.openSpot(spot);
+      } else if (this.panel.dataset.view !== "idle") {
+        // A tap on empty floor closes the panel, the way tapping outside a sheet dismisses it.
+        this.resetView();
       }
     });
     canvas.addEventListener("auxclick", (e) => {
@@ -282,11 +285,24 @@ export class RoomUI {
     this.panel.replaceChildren();
     this.panel.dataset.view = view;
     this.panel.classList.add("is-open");
+    // Anything but the idle card can be dismissed, which also pulls the camera back out, so a phone
+    // has a way back from a spot without hunting for Reset view behind the panel.
+    if (view !== "idle") {
+      const close = el("button", "mr-close", this.panel, "✕");
+      close.setAttribute("aria-label", "Close and reset the view");
+      close.onclick = () => this.resetView();
+    }
     return this.panel;
   }
 
   private setSpot(id?: string): void {
     this.currentSpot = id;
+    // Mark the spot on the top bar and scroll it into view, since the bar is wider than a phone.
+    this.root.querySelectorAll<HTMLElement>(".mr-spot").forEach((b) => {
+      const on = b.dataset.spot === id;
+      b.classList.toggle("is-active", on);
+      if (on) b.scrollIntoView({ block: "nearest", inline: "center" });
+    });
     this.host.onSpotChange?.(id);
   }
 
