@@ -1,10 +1,10 @@
 {
   "id": "memory-room",
   "name": "Memory Room",
-  "version": "0.7.6",
+  "version": "0.7.7",
   "minAppVersion": "1.7.2",
   "description": "Walk your vault as a cozy 3D room: every object is a note, laid out as a memory palace.",
-  "author": "Joshua Quek",
+  "author": "Ace Attacker",
   "isDesktopOnly": false,
   "authorUrl": "https://github.com/aceattacker77"
 }
