@@ -1,0 +1,25 @@
+{
+  "name": "obsidian-memory-room",
+  "version": "0.7.6",
+  "description": "Memory Room for Obsidian: your vault as a cozy 3D memory palace.",
+  "main": "main.js",
+  "private": true,
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc --noEmit && node esbuild.config.mjs production",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "22.13.10",
+    "@types/three": "0.186.0",
+    "esbuild": "0.28.2",
+    "obsidian": "1.14.4",
+    "typescript": "5.7.2",
+    "vitest": "5.0.5"
+  },
+  "dependencies": {
+    "three": "0.186.1"
+  },
+  "license": "MIT",
+  "repository": "github:aceattacker77/obsidian-memory-room"
+}

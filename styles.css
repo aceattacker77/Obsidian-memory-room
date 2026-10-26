@@ -1,0 +1,437 @@
+.memory-room-view {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.memory-room {
+  --mr-panel: rgba(42, 30, 50, 0.86);
+  --mr-panel-border: rgba(255, 255, 255, 0.1);
+  --mr-text: #f6ede4;
+  --mr-muted: #cdbfcf;
+  --mr-accent: #e0a83a;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  color: var(--mr-text);
+  font-family: var(--font-interface, system-ui, sans-serif);
+  user-select: none;
+}
+
+.mr-stage {
+  position: absolute;
+  inset: 0;
+}
+
+.memory-room-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+  touch-action: none;
+}
+
+.mr-topbar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 6px;
+  border-radius: 14px;
+  background: var(--mr-panel);
+  border: 1px solid var(--mr-panel-border);
+  backdrop-filter: blur(6px);
+  scrollbar-width: thin;
+}
+
+.mr-spot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 0 0 auto;
+  padding: 5px 10px 5px 6px !important;
+  border-radius: 10px !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--mr-text) !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-size: 12px;
+  cursor: pointer;
+  height: auto !important;
+}
+
+.mr-spot:hover {
+  background: rgba(255, 255, 255, 0.16) !important;
+}
+
+.mr-walk {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--mr-accent);
+  color: #2a1e32;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mr-count {
+  font-size: 11px;
+  color: var(--mr-muted);
+}
+
+.mr-rail {
+  position: absolute;
+  left: 10px;
+  top: 74px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--mr-panel);
+  border: 1px solid var(--mr-panel-border);
+  width: 120px;
+}
+
+.mr-btn {
+  background: rgba(255, 255, 255, 0.08) !important;
+  color: var(--mr-text) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: none !important;
+  border-radius: 9px !important;
+  padding: 6px 10px !important;
+  font-size: 13px;
+  cursor: pointer;
+  height: auto !important;
+  text-align: left;
+}
+
+.mr-btn:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+}
+
+.mr-primary {
+  background: var(--mr-accent) !important;
+  color: #2a1e32 !important;
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+/* The light dropdown: text centred like the buttons above it. Obsidian's dropdown style
+   pads the right for its arrow, so even the padding out. */
+.mr-rail select.mr-mood {
+  text-align: center;
+  text-align-last: center;
+  padding-left: 22px;
+  padding-right: 22px;
+  background-position: right 6px center;
+}
+
+.mr-mood option {
+  color: #222;
+}
+
+.mr-panel {
+  position: absolute;
+  right: 10px;
+  top: 74px;
+  max-height: calc(100% - 84px);
+  width: min(320px, 40%);
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 14px;
+  background: var(--mr-panel);
+  border: 1px solid var(--mr-panel-border);
+  overflow-y: auto;
+  user-select: text;
+}
+
+.mr-panel.is-open {
+  display: flex;
+}
+
+.mr-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mr-title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.mr-sub {
+  font-size: 12px;
+  color: var(--mr-muted);
+  word-break: break-word;
+}
+
+.mr-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mr-item {
+  padding: 7px 9px;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+}
+
+.mr-item:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.mr-item.is-faded {
+  opacity: 0.6;
+}
+
+.mr-item-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.mr-item-meta {
+  font-size: 11px;
+  color: var(--mr-muted);
+}
+
+.mr-nav {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.mr-nav .mr-btn {
+  flex: 1;
+  text-align: center;
+}
+
+.mr-back {
+  align-self: flex-start;
+}
+
+.mr-preview {
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  color: var(--mr-text);
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.mr-search {
+  width: 100%;
+  padding: 7px 10px;
+  border-radius: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--mr-text);
+}
+
+.mr-tooltip {
+  position: absolute;
+  pointer-events: none;
+  padding: 4px 8px;
+  border-radius: 7px;
+  background: rgba(20, 14, 26, 0.9);
+  color: var(--mr-text);
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.1s;
+  white-space: nowrap;
+}
+
+.mr-tooltip.is-visible {
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .mr-rail {
+    top: auto;
+    bottom: 10px;
+    left: auto;
+    right: 10px;
+    flex-direction: row;
+    width: auto;
+  }
+  .mr-panel {
+    top: auto;
+    bottom: 10px;
+    left: 10px;
+    width: auto;
+    max-height: 45%;
+  }
+}
+
+/* Narrow panes (a split or the sidebar): numbers only on the spot bar, rail in a row at the bottom,
+   panel along the bottom so it doesn't cover the room. */
+.memory-room {
+  container-type: size;
+  container-name: memory-room;
+}
+
+@container memory-room (max-width: 760px) {
+  .mr-spot .mr-label,
+  .mr-spot .mr-count {
+    display: none;
+  }
+  .mr-spot {
+    padding: 4px !important;
+  }
+  .mr-rail {
+    top: auto;
+    bottom: 10px;
+    left: auto;
+    right: 10px;
+    flex-direction: row;
+    width: auto;
+  }
+  .mr-panel {
+    top: auto;
+    left: 10px;
+    bottom: 128px;
+    width: auto;
+    max-height: 42%;
+  }
+}
+
+.mr-preview.markdown-rendered {
+  white-space: normal;
+  font-size: 13px;
+}
+
+.mr-preview.markdown-rendered > :first-child {
+  margin-top: 0;
+}
+
+.memory-room-rules {
+  width: 100%;
+  font-family: var(--font-monospace);
+}
+
+.mr-music {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.mr-music-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.mr-music-controls .mr-btn {
+  flex: 1;
+  text-align: center;
+  font-size: 15px;
+}
+
+.mr-music-play {
+  background: var(--mr-accent) !important;
+  color: #2a1e32 !important;
+}
+
+.mr-music-seek {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mr-music-range {
+  flex: 1;
+  accent-color: var(--mr-accent);
+}
+
+.mr-tracks {
+  max-height: 32vh;
+  overflow-y: auto;
+}
+
+.mr-track.is-playing {
+  background: rgba(224, 168, 58, 0.28);
+}
+
+.mr-music-mute {
+  flex: 0 0 auto;
+  padding: 4px 8px !important;
+}
+
+.mr-music-pct {
+  min-width: 42px;
+  text-align: right;
+}
+
+.mr-music-folder {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mr-music-folder .mr-item-meta {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mr-music-folder .mr-btn {
+  flex: 0 0 auto;
+  font-size: 12px;
+}
+
+/* Bottom-left pad for moving, turning and tilting the view. */
+.mr-pad {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--mr-panel);
+  border: 1px solid var(--mr-panel-border);
+  user-select: none;
+  touch-action: none;
+}
+.mr-pad-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--mr-muted);
+  text-align: center;
+  margin-bottom: 4px;
+}
+.mr-pad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 30px);
+  grid-template-rows: repeat(3, 30px);
+  grid-template-areas: ". u tr" "l c r" ". d br";
+  gap: 3px;
+}
+.mr-pad-btn {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  font-size: 13px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  cursor: pointer;
+}

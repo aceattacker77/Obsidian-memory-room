@@ -1,0 +1,17 @@
+import esbuild from "esbuild";
+import builtins from "module";
+
+const prod = process.argv[2] === "production";
+const ctx = await esbuild.context({
+  entryPoints: ["src/main.ts"],
+  bundle: true,
+  external: ["obsidian", "electron", "@codemirror/*", "@lezer/*", ...builtins.builtinModules],
+  format: "cjs",
+  target: "es2020",
+  logLevel: "info",
+  sourcemap: prod ? false : "inline",
+  treeShaking: true,
+  minify: prod,
+  outfile: "main.js",
+});
+if (prod) { await ctx.rebuild(); await ctx.dispose(); } else { await ctx.watch(); }
