@@ -1,6 +1,6 @@
 {
   "name": "obsidian-memory-room",
-  "version": "0.7.7",
+  "version": "0.7.8",
   "description": "Memory Room for Obsidian: your vault as a cozy 3D memory palace.",
   "main": "main.js",
   "private": true,

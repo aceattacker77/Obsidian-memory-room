@@ -436,10 +436,12 @@
   cursor: pointer;
 }
 
-/* Phones: Obsidian floats its navigation bar over the bottom of the pane, so the controls sit
-   above it, and the notes panel becomes a capped bottom sheet that leaves the room visible. */
+/* Phones: Obsidian's floating navigation bar and the system bar sit over the bottom of the pane
+   (about 95px on an Android phone, and env() reports nothing there), so the controls keep a fixed
+   gap above them, stacked rail then pad. The notes panel goes to the top under the spot bar, so
+   nothing stacks on the pad and the room stays visible in the middle. */
 body.is-phone .memory-room {
-  --mr-bottom: calc(env(safe-area-inset-bottom, 0px) + 84px);
+  --mr-bottom: calc(max(env(safe-area-inset-bottom, 0px), 0px) + 112px);
 }
 body.is-phone .memory-room .mr-rail {
   bottom: var(--mr-bottom);
@@ -448,17 +450,23 @@ body.is-phone .memory-room .mr-rail {
   justify-content: center;
 }
 body.is-phone .memory-room .mr-pad {
-  bottom: calc(var(--mr-bottom) + 56px);
+  bottom: calc(var(--mr-bottom) + 58px);
+  left: 10px;
+  right: 10px;
+  justify-content: center;
 }
 body.is-phone .memory-room .mr-panel {
-  top: auto;
-  bottom: calc(var(--mr-bottom) + 112px);
-  left: 8px;
-  right: 8px;
+  top: 72px;
+  bottom: auto;
+  left: 10px;
+  right: 10px;
   width: auto;
-  max-height: 40%;
+  max-height: 30%;
   overflow-y: auto;
   padding-right: 40px;
+}
+body.is-phone .memory-room .mr-panel[data-view="idle"] .mr-sub {
+  display: none;
 }
 
 /* The close button sits in the panel's top right corner, clear of the title. */
