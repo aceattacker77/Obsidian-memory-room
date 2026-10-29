@@ -3,6 +3,9 @@
 Your vault becomes a cozy 3D room: every note is an object on one of 11 spots, walked in a fixed
 order like a memory palace. Built with Three.js; runs inside Obsidian.
 
+**[Try the live demo](https://aceattacker77.github.io/obsidian-memory-room/)** in your browser, with a
+made-up sample vault. Nothing to install, and nothing leaves your browser.
+
 ![The room](docs/room.png)
 
 ## What it does
@@ -63,6 +66,9 @@ npm install
 npm test        # vitest
 npm run build   # typecheck + bundle to main.js
 ```
+
+The live demo is `docs/index.html`, served by GitHub Pages from the `docs/` folder. Its source is in
+`demo/`; rebuild it after a release with `node demo/build.mjs path/to/cat.glb docs/index.html`.
 
 ## License
 MIT. DJ Whiskers was made with Meshy.
