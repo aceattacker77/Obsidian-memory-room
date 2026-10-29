@@ -5,7 +5,7 @@ Builds `memory-room-demo.html`, one offline file (about 8.5 MB) with the plugin'
 
 1. Run `npm ci` in the repo root.
 2. `node demo/build.mjs path/to/cat.glb docs/index.html` writes the live demo that GitHub Pages serves
-   (https://aceattacker77.github.io/obsidian-memory-room/), plus `docs/index.artifact.html` (same page
+   (https://aceattacker77.github.io/Obsidian-memory-room/), plus `docs/index.artifact.html` (same page
    without the html/head/body wrapper, for publishing as a claude.ai Artifact; don't commit it).
    With no output path it writes `demo/memory-room-demo.html`.
 

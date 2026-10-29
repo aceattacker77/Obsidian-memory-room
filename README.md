@@ -3,7 +3,7 @@
 Your vault becomes a cozy 3D room: every note is an object on one of 11 spots, walked in a fixed
 order like a memory palace. Built with Three.js; runs inside Obsidian.
 
-**[Try the live demo](https://aceattacker77.github.io/obsidian-memory-room/)** in your browser, with a
+**[Try the live demo](https://aceattacker77.github.io/Obsidian-memory-room/)** in your browser, with a
 made-up sample vault. Nothing to install, and nothing leaves your browser.
 
 ![The room](docs/room.png)
