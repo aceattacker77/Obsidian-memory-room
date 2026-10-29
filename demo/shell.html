@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Memory Room Demo</title>
+<meta name="description" content="Try Memory Room, the cozy 3D memory palace for Obsidian, in your browser with a sample vault.">
+<style>
+/*PLUGIN_CSS*/
+</style>
+<style>
+:root {
+  --demo-bg: #1d1524;
+  --demo-bar: #2a1e32;
+  --demo-text: #f6ede4;
+  --demo-muted: #cdbfcf;
+  --demo-accent: #e0a83a;
+  --demo-card: #fbf6f0;
+  --demo-card-text: #2a1e32;
+  --demo-card-muted: #6d5e70;
+  --demo-link: #8a4fb0;
+  --font-interface: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --demo-card: #2f2338;
+    --demo-card-text: #f6ede4;
+    --demo-card-muted: #cdbfcf;
+    --demo-link: #f0c060;
+  }
+}
+:root[data-theme="dark"] {
+  --demo-card: #2f2338;
+  --demo-card-text: #f6ede4;
+  --demo-card-muted: #cdbfcf;
+  --demo-link: #f0c060;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body {
+  background: var(--demo-bg);
+  color: var(--demo-text);
+  font-family: var(--font-interface);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.demo-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 14px;
+  background: var(--demo-bar);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  line-height: 1.3;
+}
+.demo-by { color: var(--demo-muted); }
+.demo-bar b { color: var(--demo-accent); font-weight: 600; }
+.demo-bar .demo-pill {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 2px 7px; border-radius: 999px; background: var(--demo-accent); color: #2a1e32;
+}
+.demo-bar .demo-note { color: var(--demo-muted); flex: 1; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.demo-bar a {
+  color: var(--demo-text); text-decoration: none; white-space: nowrap;
+  padding: 4px 10px; border-radius: 6px; border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.demo-bar a:hover { background: rgba(255, 255, 255, 0.08); }
+#room { flex: 1; min-height: 0; position: relative; }
+#room > .memory-room { position: absolute; inset: 0; min-height: 0; }
+.demo-loading {
+  position: absolute; inset: 0; display: grid; place-items: center; color: var(--demo-muted); font-size: 14px;
+  pointer-events: none;
+}
+
+/* A browser has no Obsidian nav bar to keep clear of, only the system's safe area. */
+body.is-phone .memory-room { --mr-bottom: calc(env(safe-area-inset-bottom, 0px) + 10px); }
+body.is-phone .demo-bar .demo-note { display: none; }
+body.is-phone .demo-bar { padding: 6px 10px; font-size: 12px; }
+body.is-phone .memory-room .mr-panel { top: 62px; max-height: 34%; }
+
+/* The note reader: what "Open note" does in the demo. */
+.demo-reader {
+  position: fixed; inset: 0; z-index: 50; background: rgba(10, 6, 14, 0.55);
+  display: grid; place-items: center; padding: 16px;
+}
+.demo-reader-card {
+  width: min(620px, 100%); max-height: min(80dvh, 720px); display: flex; flex-direction: column;
+  background: var(--demo-card); color: var(--demo-card-text); border-radius: 12px; overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.45);
+}
+.demo-reader-bar {
+  display: flex; align-items: center; gap: 8px; padding: 10px 12px 10px 18px;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.2); font-size: 12px; color: var(--demo-card-muted);
+}
+.demo-reader-path { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: ui-monospace, monospace; }
+.demo-reader-close {
+  width: 30px; height: 30px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(127, 127, 127, 0.15); color: var(--demo-card-text);
+}
+.demo-reader-body { padding: 4px 22px 18px; overflow-y: auto; font-size: 15px; line-height: 1.6; }
+.demo-reader-body h1 { font-size: 24px; margin: 14px 0 8px; }
+.demo-reader-body h2 { font-size: 17px; margin: 16px 0 4px; }
+.demo-reader-body a, .mr-preview a { color: var(--demo-link); }
+.demo-reader-foot { padding: 10px 18px; font-size: 12px; color: var(--demo-card-muted); border-top: 1px solid rgba(127, 127, 127, 0.2); }
+.mr-preview a { color: var(--demo-accent); }
+.task-list-item { list-style: none; margin-left: -1.3em; }
+.task-list-item input { margin-right: 4px; }
+.is-unresolved { opacity: 0.7; }
+
+.demo-toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 60;
+  background: var(--demo-bar); color: var(--demo-text); border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 10px 16px; border-radius: 8px; font-size: 13px; max-width: calc(100% - 32px);
+  transition: opacity 0.5s;
+}
+.demo-toast.is-gone { opacity: 0; }
+</style>
+</head>
+<body>
+<div class="demo-bar">
+  <span class="demo-pill">Demo</span>
+  <span><b>Memory Room</b> <span class="demo-by">by Ace Attacker</span></span>
+  <span class="demo-note">Sample notes only, nothing leaves your browser. Drag to look around, click a spot, or press Walk.</span>
+  <a href="https://github.com/aceattacker77/obsidian-memory-room" target="_blank" rel="noopener">Get it for Obsidian</a>
+</div>
+<div id="room"><div class="demo-loading">Setting up the room…</div></div>
+<script>window.CAT_GLB = "/*CAT_GLB*/";</script>
+<script>
+/*DEMO_JS*/
+document.querySelector(".demo-loading")?.remove();
+</script>
+</body>
+</html>
