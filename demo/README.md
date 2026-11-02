@@ -4,8 +4,8 @@ Builds `memory-room-demo.html`, one offline file (about 8.5 MB) with the plugin'
 (`src/ui.ts`, `src/scene.ts`, three.js), styles.css, the DJ Whiskers cat model and a made-up sample vault.
 
 1. Run `npm ci` in the repo root.
-2. `node demo/build.mjs path/to/cat.glb docs/index.html` writes the live demo that GitHub Pages serves
-   (https://aceattacker77.github.io/Obsidian-memory-room/), plus `docs/index.artifact.html` (same page
+2. `node demo/build.mjs path/to/cat.glb docs/index.html --split` writes the live demo that GitHub Pages serves
+   (https://aceattacker77.github.io/Obsidian-memory-room/) as a small page plus `docs/cat.glb`, plus `docs/index.artifact.html` (same page
    without the html/head/body wrapper, for publishing as a claude.ai Artifact; don't commit it).
    With no output path it writes `demo/memory-room-demo.html`.
 
