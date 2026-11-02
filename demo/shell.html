@@ -127,6 +127,19 @@ body.is-phone .memory-room .mr-panel { top: 62px; max-height: 34%; }
   <a href="https://github.com/aceattacker77/obsidian-memory-room" target="_blank" rel="noopener">Get it for Obsidian</a>
 </div>
 <div id="room"><div class="demo-loading">Setting up the room…</div></div>
+<script>
+// If the room can't start (no WebGL, an old browser), say so instead of leaving the page empty.
+window.addEventListener("error", function (e) {
+  var box = document.querySelector(".demo-loading");
+  if (!box) return;
+  var gl = /webgl/i.test(String(e.message));
+  box.textContent = gl
+    ? "This demo needs WebGL, which this browser has turned off. Try another browser, or turn on hardware acceleration."
+    : "The room couldn't start in this browser (" + e.message + ").";
+  box.style.padding = "0 24px";
+  box.style.textAlign = "center";
+});
+</script>
 <script>window.CAT_GLB = "/*CAT_GLB*/";</script>
 <script>
 /*DEMO_JS*/

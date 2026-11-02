@@ -96,6 +96,16 @@ function decodeCat(): ArrayBuffer | undefined {
   return bytes.buffer;
 }
 
+/** The GitHub Pages build keeps the cat in its own file (docs/cat.glb) so the page itself stays small. */
+async function fetchCat(): Promise<ArrayBuffer | undefined> {
+  try {
+    const res = await fetch("cat.glb");
+    return res.ok ? await res.arrayBuffer() : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 function toast(text: string): void {
   const t = document.createElement("div");
   t.className = "demo-toast";
@@ -168,7 +178,7 @@ function start(): void {
         ui.showMemory(a.getAttribute("data-href")!);
       };
     },
-    petModel: async () => decodeCat(),
+    petModel: async () => decodeCat() ?? fetchCat(),
     music: {
       player,
       folder: () => "Demo loops, made in your browser",

@@ -5,3 +5,4 @@ cat.glb
 demo/*.html
 !demo/shell.html
 docs/*.artifact.html
+!docs/cat.glb
